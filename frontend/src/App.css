@@ -2,3 +2,11 @@ body {
   background-color: #f4f4f5;
   margin: 0;
 }
+@font-face {
+  font-family: "NotoSansThai";
+  src: local("MyFont"),
+    url(../public/fonts/NotoSansThai-Bold.woff) format("woff");
+  /* other formats include: 'woff2', 'truetype, 'opentype',
+                            'embedded-opentype', and 'svg' */
+}
+/* d: \TWC\ETAX\frontend\public\fonts\NotoSansThai-Bold.woff; */

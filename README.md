@@ -24,8 +24,14 @@ node_modules/
 server.js
 
 frontend
-npm i axios react-router-dom redux react-redux redux-thunk redux-devtools-extension
-npm install @mui/material @mui/styled-engine-sc styled-components
-npm install @emotion/react
-@emotion/styled
+
+- npm i axios react-router-dom redux react-redux redux-thunk redux-devtools-extension
+- npm install @mui/material @mui/styled-engine-sc styled-components
+- npm install @emotion/react
+- @emotion/styled
+
+#### font
+
+- https://fonts.google.com/noto/specimen/Noto+Sans+Thai
+
 \*\* npm run dev

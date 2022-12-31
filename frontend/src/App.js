@@ -9,14 +9,15 @@ function App() {
     <Router>
       {/* <div className="app"> */}
       <Navbar />
-      <main>
+      <TaxInvoice />
+      {/*  <main>
         <Routes>
           <Route exact path="/home" element={<Home />} />
           <Route exact path="/profile" element={<Profile />} />
           <Route exact path="/wacoal-tax-invoice" element={<TaxInvoice />} />
-          {/* <Route exact path="/" component={}/> */}
+          {/* <Route exact path="/" component={}/>  
         </Routes>
-      </main>
+      </main>*/}
       {/* Navbar */}
       {/* Side */}
       {/* backdrop */}
