@@ -23,7 +23,11 @@ node_modules/
 
 server.js
 
-frontend
+backend
+
+- npm i cors
+- npm i mssql
+  frontend
 
 - npm i axios react-router-dom redux react-redux redux-thunk redux-devtools-extension
 - npm install @mui/material @mui/styled-engine-sc styled-components
