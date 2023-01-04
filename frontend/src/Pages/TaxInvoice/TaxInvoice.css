@@ -12,4 +12,14 @@
 
 .tax-conditions {
   float: right;
+  font-family: "NotoSansThai" !important;
+  font-size: 13px;
+}
+
+.form-invoice {
+  width: 100% !important;
+}
+
+.bt-submit {
+  text-align: right;
 }

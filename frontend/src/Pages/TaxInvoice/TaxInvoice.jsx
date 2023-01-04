@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./TaxInvoice.css";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -13,15 +13,27 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-
+import SearchIcon from "@mui/icons-material/Search";
 import CardActions from "@mui/material/CardActions";
 import CustomerInvoice from "../../components/CustomerInvoice/CustomerInvoice";
 import { Link } from "react-router-dom";
 import ConditionsTaxInv from "../../Pages/ConditionsTaxInv/ConditionsTaxInv";
+
 const TaxInvoice = () => {
-  const searchinvoice = () => {
+  const [state, setState] = useState({
+    pono: "",
+    invoiceno: "",
+  });
+  const searchinvoice = (event) => {
     console.log("searchinvoice");
+    alert("A name was submitted: " + state.pono + " " + state.invoiceno);
+    // alert("A name was submitted: " + props.name);
+    event.preventDefault();
   };
+  const handlechange = (event) => {
+    setState({ pono: event.target.value });
+  };
+
   return (
     <div>
       {/* <Container maxWidth="xl" sx={{ paddingBottom: "70px" }}> */}
@@ -42,47 +54,50 @@ const TaxInvoice = () => {
               เงื่อนไขการออกใบกำกับภาษีสำหรับบุคคลธรรมดา
             </Link>
             <Container>
-              <Grid container spacing={2}>
-                <Grid item xs={4}>
-                  {" "}
-                  <FormControl fullWidth size="small">
-                    <InputLabel id="demo-simple-select-label">
-                      ช่องทางการสั่งซื้อ
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      label="Marketplace"
-                    >
-                      <MenuItem value={10}>LAZADA</MenuItem>
-                      <MenuItem value={20}>SHOPEE</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={4}>
-                  <TextField
-                    label="เลขที่คำสั่งซื้อ (Order No.)"
-                    variant="outlined"
-                    focused
-                    size="small"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={4}>
-                  <TextField
-                    label="Tracking No."
-                    variant="outlined"
-                    size="small"
-                    fullWidth
-                  />
-                </Grid>
+              <Grid container spacing={2} direction="row">
+                <form onSubmit={searchinvoice} className="form-invoice">
+                  <Grid container spacing={3}>
+                    {/* <Grid item xs={12}></Grid> */}
+                    <Grid item xs={4}>
+                      <TextField
+                        label="เลขที่คำสั่งซื้อ (Order No.)"
+                        variant="outlined"
+                        focused
+                        size="small"
+                        fullWidth
+                        name="po"
+                        value={state.pono}
+                        onChange={handlechange}
+                      />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <TextField
+                        label="เลขที่ใบกำกับภาษี/Invoice No."
+                        variant="outlined"
+                        size="small"
+                        fullWidth
+                        focused
+                        name="invoiceno"
+                        //value={state.invoiceno}
+                        //onChange={handlechange_invoice}
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid container spacing={3}>
+                    <Grid item xs={12} className="bt-submit">
+                      <Button
+                        startIcon={<SearchIcon />}
+                        type="submit"
+                        value="Submit"
+                        variant="contained"
+                        //onClick={searchinvoice}
+                      >
+                        Search
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </form>
               </Grid>
-
-              <Button variant="contained" onClick={searchinvoice}>
-                {/* endIcon={<SendIcon />} */}
-                Send
-              </Button>
             </Container>
           </CardContent>
           <CardActions>
@@ -95,7 +110,7 @@ const TaxInvoice = () => {
                 fontSize: "12px",
               }}
             >
-              *** สามารถดาวน์โหลดใบกำกับภาษี e-TAX
+              *** สามารถดาวน์โหลดใบกำกับภาษี E-TAX
               ได้หลังจากท่านได้รับสินค้าเรียบร้อยแล้ว
             </Typography>
           </CardActions>
