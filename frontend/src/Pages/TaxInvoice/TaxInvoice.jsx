@@ -9,15 +9,10 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import SearchIcon from "@mui/icons-material/Search";
 import CardActions from "@mui/material/CardActions";
 import CustomerInvoice from "../../components/CustomerInvoice/CustomerInvoice";
 import { Link } from "react-router-dom";
-import ConditionsTaxInv from "../../Pages/ConditionsTaxInv/ConditionsTaxInv";
 
 const TaxInvoice = () => {
   const [state, setState] = useState({
@@ -36,17 +31,12 @@ const TaxInvoice = () => {
 
   return (
     <div>
-      {/* <Container maxWidth="xl" sx={{ paddingBottom: "70px" }}> */}
       <Box sx={{ p: 5 }}>
-        {/* <Grid rowSpacing={1} container spacing={2}>
-          <Grid item xs={12}> */}
         <Card sx={{ borderRadius: "15px" }} variant="outlined">
-          {/* minWidth: 275, */}
           <CardHeader
             className="f-header"
             title="ค้นหาใบกำกับภาษี"
-            subheader="กรุณาเลือกช่องทางการขาย และระบุเลขที่คำสั่งซื้อ หรือ Tracking No.
-              ของท่าน"
+            subheader="กรุณาระบุเลขที่คำสั่งซื้อหรือเลขที่ใบกำกับภาษีของท่าน"
           ></CardHeader>
           {/* <Typography variant="h5">ค้นหาใบกำกับภาษี</Typography> */}
           <CardContent>
