@@ -1,23 +1,24 @@
 import React from "react";
+import axios from 'axios';
 import "./CustomerInvoice.css";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
-// import Container from "@mui/material/Container";
-// import Typography from "@mui/material/Typography";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import PaginationItem from "@mui/material/PaginationItem";
 import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
 import IconButton from "@mui/material/IconButton";
 import PrintIcon from "@mui/icons-material/Print";
-const CustomerInvoice = () => {
+
+
+const CustomerInvoice = (props) => {
+ 
   return (
     <Box sx={{ p: 5 }}>
       {/* <Grid rowSpacing={1} container spacing={2}>
@@ -26,6 +27,7 @@ const CustomerInvoice = () => {
         {/* minWidth: 275, */}
         <CardHeader className="f-header" title="ข้อมูลใบกำกับภาษี"></CardHeader>
         <CardContent>
+          {props.data}
           {/* <Typography variant="h6">ข้อมูลใบกำกับภาษี</Typography> */}
           {/* <Container> */}
           <TableContainer>

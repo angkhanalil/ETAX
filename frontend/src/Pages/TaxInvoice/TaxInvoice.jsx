@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from 'axios';
 import "./TaxInvoice.css";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -13,20 +14,25 @@ import SearchIcon from "@mui/icons-material/Search";
 import CardActions from "@mui/material/CardActions";
 import CustomerInvoice from "../../components/CustomerInvoice/CustomerInvoice";
 import { Link } from "react-router-dom";
-
+ 
 const TaxInvoice = () => {
+ 
   const [ponum, setPonum] = useState('');
   const [invoiceno, setInvoiceno] = useState('');
+  const [isShown, setIsShown] = useState(false);
+ 
 
-  const searchinvoice = (event) => {
-    console.log("searchinvoice");
-    alert("A name was submitted: " +  ponum + " " + invoiceno);
-    // alert("A name was submitted: " + props.name);
+  const searchinvoice = (event) => {  
+   
+    axios.get('http://localhost:5000/api/order').then((response) => { 
+      console.log(response.data);
+      setIsShown(current => !current)
+    })
+    .catch((error) => {
+      console.log(error);
+    }); 
     event.preventDefault();
-  };
-  const handlechange = (event) => {
-    setPonum(event.target.value);
-  };
+  }; 
 
   return (
     <div>
@@ -110,7 +116,7 @@ const TaxInvoice = () => {
         {/* </Grid>
         </Grid> */}
       </Box>
-      <CustomerInvoice />
+      {isShown && <CustomerInvoice data={ponum}/>} 
       {/* </Container> */}
     </div>
   );
