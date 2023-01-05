@@ -15,18 +15,17 @@ import CustomerInvoice from "../../components/CustomerInvoice/CustomerInvoice";
 import { Link } from "react-router-dom";
 
 const TaxInvoice = () => {
-  const [state, setState] = useState({
-    pono: "",
-    invoiceno: "",
-  });
+  const [ponum, setPonum] = useState('');
+  const [invoiceno, setInvoiceno] = useState('');
+
   const searchinvoice = (event) => {
     console.log("searchinvoice");
-    alert("A name was submitted: " + state.pono + " " + state.invoiceno);
+    alert("A name was submitted: " +  ponum + " " + invoiceno);
     // alert("A name was submitted: " + props.name);
     event.preventDefault();
   };
   const handlechange = (event) => {
-    setState({ pono: event.target.value });
+    setPonum(event.target.value);
   };
 
   return (
@@ -44,6 +43,7 @@ const TaxInvoice = () => {
               เงื่อนไขการออกใบกำกับภาษีสำหรับบุคคลธรรมดา
             </Link>
             <Container>
+            
               <Grid container spacing={2} direction="row">
                 <form onSubmit={searchinvoice} className="form-invoice">
                   <Grid container spacing={3}>
@@ -56,8 +56,9 @@ const TaxInvoice = () => {
                         size="small"
                         fullWidth
                         name="po"
-                        value={state.pono}
-                        onChange={handlechange}
+                        value={ponum}
+                        onChange={e => setPonum(e.target.value)}  
+                        //onChange={handlechange}
                       />
                     </Grid>
                     <Grid item xs={4}>
@@ -68,7 +69,8 @@ const TaxInvoice = () => {
                         fullWidth
                         focused
                         name="invoiceno"
-                        //value={state.invoiceno}
+                        value={invoiceno}
+                        onChange={e => setInvoiceno(e.target.value)}
                         //onChange={handlechange_invoice}
                       />
                     </Grid>
