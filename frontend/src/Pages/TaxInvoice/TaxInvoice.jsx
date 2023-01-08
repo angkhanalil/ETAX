@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./TaxInvoice.css";
+import Moment from "moment";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -30,7 +31,7 @@ const TaxInvoice = () => {
   const [invoiceno, setInvoiceno] = useState("");
   const [isShown, setIsShown] = useState(false);
   const [err, setErr] = useState("");
-
+  Moment.locale("en");
   const searchinvoice = (event) => {
     // try{
     //   const response = await  axios.get('http://localhost:5000/api/order');
@@ -67,6 +68,16 @@ const TaxInvoice = () => {
   };
 
   const downloadinvoice = (info) => {
+    //get
+    axios
+      .get("http://localhost:5000/api/downlaod")
+      .then((response) => {
+        console.log(response.data);
+        console.log(JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     console.log(info);
     console.log("download");
   };
@@ -176,13 +187,14 @@ const TaxInvoice = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {data.map((inv) => {
+                    {data.map((inv, index) => {
                       return (
-                        <TableRow key="{inv.BILL_NO}">
-                          <TableCell align="center"> </TableCell>
+                        <TableRow key="{index}">
+                          <TableCell align="center">{index + 1} </TableCell>
                           <TableCell align="center">
-                            {" "}
-                            {inv.DOCUMENT_ISSUE_DTM}
+                            {Moment(inv.DOCUMENT_ISSUE_DTM).format(
+                              "DD MMM yyyy"
+                            )}
                           </TableCell>
                           <TableCell align="center">{inv.BILL_NO}</TableCell>
                           <TableCell align="center">
@@ -191,7 +203,7 @@ const TaxInvoice = () => {
                           <TableCell align="center">
                             {inv.BUYER_ORDER_ASSIGN_ID}
                           </TableCell>
-                          <TableCell align="center">D</TableCell>
+                          <TableCell align="center"> </TableCell>
                           <TableCell align="center">
                             <IconButton
                               aria-label="print"
