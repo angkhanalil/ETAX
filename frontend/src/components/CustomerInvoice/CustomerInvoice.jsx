@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from 'axios';
 import "./CustomerInvoice.css";
 import Box from "@mui/material/Box";
@@ -18,7 +18,10 @@ import PrintIcon from "@mui/icons-material/Print";
 
 
 const CustomerInvoice = (props) => {
- 
+  
+  const data1  = props.invoice.length;
+  console.log(data1)
+  //const data = JSON.stringify(data);
   return (
     <Box sx={{ p: 5 }}>
       {/* <Grid rowSpacing={1} container spacing={2}>
@@ -27,7 +30,9 @@ const CustomerInvoice = (props) => {
         {/* minWidth: 275, */}
         <CardHeader className="f-header" title="ข้อมูลใบกำกับภาษี"></CardHeader>
         <CardContent>
-          {props.data}
+         
+        
+          
           {/* <Typography variant="h6">ข้อมูลใบกำกับภาษี</Typography> */}
           {/* <Container> */}
           <TableContainer>
@@ -43,13 +48,15 @@ const CustomerInvoice = (props) => {
                   <TableCell align="center">ดาวน์โหลดเอกสาร</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
-                <TableRow>
-                  <TableCell align="center"> 1 </TableCell>
-                  <TableCell align="center"> B</TableCell>
-                  <TableCell align="center">C</TableCell>
-                  <TableCell align="center">D</TableCell>
-                  <TableCell align="center">E</TableCell>
+              <TableBody>  
+              {/* {data.map(inv => {
+        return (
+          <TableRow key="{inv.BILL_NO}">
+                  <TableCell align="center"> </TableCell>
+                  <TableCell align="center"> {inv.DOCUMENT_ISSUE_DTM}</TableCell>
+                  <TableCell align="center">{inv.BILL_NO}</TableCell>
+                  <TableCell align="center">{inv.DOCUMENT_NAME}</TableCell>
+                  <TableCell align="center">{inv.BUYER_ORDER_ASSIGN_ID}</TableCell>
                   <TableCell align="center">D</TableCell>
                   <TableCell align="center">
                     <IconButton aria-label="print">
@@ -57,15 +64,18 @@ const CustomerInvoice = (props) => {
                     </IconButton>
                   </TableCell>
                 </TableRow>
+        );
+      })} */}
+                
               </TableBody>
             </Table>
           </TableContainer>
           {/* </Container> */}
-          <Box sx={{ paddingTop: "20px", display: "flex" }}>
+          {/* <Box sx={{ paddingTop: "20px", display: "flex" }}>
             <Stack spacing={2} sx={{ margin: "auto" }}>
               <Pagination count={10} color="secondary" variant="outlined" />
             </Stack>
-          </Box>
+          </Box> */}
         </CardContent>
       </Card>
       {/* </Grid>
