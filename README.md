@@ -25,6 +25,7 @@ server.js
 
 backend
 
+- npm i axios
 - npm i cors
 - npm i mssql
 
@@ -36,6 +37,7 @@ frontend
 - @emotion/styled
 - npm install @mui/icons-material
 - npm install @mui/joy
+- npm install moment --save
 
 logging
 
