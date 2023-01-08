@@ -14,9 +14,11 @@ const getOrder = async (req, res) => {
     logger.debug("Debugging info");
     // const order = await Order.find({});
     //https://www.npmjs.com/package/mssql#query-command-callback
-    res.json(order.recordsets[0]);
+    //res.json(order.recordsets[0]);
+    res.status(200).json(order.recordsets[0]);
   } catch (error) {
     res.status(500).json({ message: error.message });
+    //console.log(error.message);
   }
 };
 
