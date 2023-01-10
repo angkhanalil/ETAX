@@ -17,14 +17,28 @@ import CardActions from "@mui/material/CardActions";
 import { Link } from "react-router-dom";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import IconButton from "@mui/material/IconButton";
-import PrintIcon from "@mui/icons-material/Print";
-// import Stack from "@mui/material/Stack";
-// import Pagination from "@mui/material/Pagination";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import Stack from "@mui/material/Stack";
+import Pagination from "@mui/material/Pagination";
+import { styled } from "@mui/material/styles";
+import env from "react-dotenv";
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: "#d5446ca6",
+    color: theme.palette.common.white,
+    fontFamily: "NotoSansThai",
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
 const TaxInvoice = () => {
   const [data, setData] = useState([]);
   const [ponum, setPonum] = useState("");
@@ -32,32 +46,15 @@ const TaxInvoice = () => {
   const [isShown, setIsShown] = useState(false);
   const [err, setErr] = useState("");
   Moment.locale("en");
+
   const searchinvoice = (event) => {
-    // try{
-    //   const response = await  axios.get('http://localhost:5000/api/order');
-    //   console.log(response)
-    //   if(!response.ok){
-    //     throw new Error(`Error! status: ${response.status}`);
-
-    //   }
-
-    //   const result =  await response.json();
-    //   console.log('result is: ', JSON.stringify(result, null, 4));
-    //   setData(result);
-    //   console.log(data)
-    //   setIsShown(current => !current)
-    // }catch (err) {
-    //   setErr(err.message);
-    // } finally {
-    //   //setIsLoading(false);
-    //   //setIsShown(current => false)
-    // }
+    setIsShown(false);
 
     axios
-      .get("http://localhost:5000/api/order")
+      .get(`${process.env.REACT_APP_BACKEND_API_BASE_URL}` + "/api/order")
       .then((response) => {
-        console.log(response.data);
-        console.log(JSON.stringify(response.data));
+        // console.log(response.data);
+        // console.log(JSON.stringify(response.data));
         setData(response.data);
         setIsShown((current) => !current);
       })
@@ -69,17 +66,22 @@ const TaxInvoice = () => {
 
   const downloadinvoice = (info) => {
     //get
+    console.log(info.DOCUMENT_ID);
+    console.log(Moment(info.DOCUMENT_ISSUE_DTM).format("yyyyMMDD"));
+
     axios
-      .get("http://localhost:5000/api/downlaod")
+      .get(`${process.env.REACT_APP_BACKEND_API_BASE_URL}` + "/api/downlaod")
       .then((response) => {
         console.log(response.data);
-        console.log(JSON.stringify(response.data));
+        // console.log(JSON.stringify(response.data));
+        // console.log(response.data.pdfURL);
+        window.open(response.data.pdfURL, "_blank");
       })
       .catch((error) => {
         console.log(error);
+        setIsShown(false);
+        throw new Error(`Error! status: ${error}`);
       });
-    console.log(info);
-    console.log("download");
   };
 
   return (
@@ -103,7 +105,6 @@ const TaxInvoice = () => {
                 <Grid container spacing={2} direction="row">
                   <form onSubmit={searchinvoice} className="form-invoice">
                     <Grid container spacing={3}>
-                      {/* <Grid item xs={12}></Grid> */}
                       <Grid item xs={4}>
                         <TextField
                           label="เลขที่คำสั่งซื้อ (Order No.)"
@@ -133,11 +134,11 @@ const TaxInvoice = () => {
                     <Grid container spacing={3}>
                       <Grid item xs={12} className="bt-submit">
                         <Button
+                          className="btn-search"
                           startIcon={<SearchIcon />}
                           type="submit"
                           value="Submit"
                           variant="contained"
-                          //onClick={searchinvoice}
                         >
                           Search
                         </Button>
@@ -177,13 +178,25 @@ const TaxInvoice = () => {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                   <TableHead>
                     <TableRow>
-                      <TableCell align="center">ลำดับ</TableCell>
-                      <TableCell align="center">วันที่เอกสาร</TableCell>
-                      <TableCell align="center">เลขที่เอกสาร</TableCell>
-                      <TableCell align="center">ประเภทเอกสาร</TableCell>
-                      <TableCell align="center">เลขที่คำสั่งซื้อ</TableCell>
-                      <TableCell align="center">Tracking No.</TableCell>
-                      <TableCell align="center">ดาวน์โหลดเอกสาร</TableCell>
+                      <StyledTableCell align="center">ลำดับ</StyledTableCell>
+                      <StyledTableCell align="center">
+                        วันที่เอกสาร
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        เลขที่เอกสาร
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        ประเภทเอกสาร
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        เลขที่คำสั่งซื้อ
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        Tracking No.
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        ดาวน์โหลดเอกสาร
+                      </StyledTableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -211,7 +224,7 @@ const TaxInvoice = () => {
                                 downloadinvoice(inv);
                               }}
                             >
-                              <PrintIcon />
+                              <FileDownloadIcon />
                             </IconButton>
                           </TableCell>
                         </TableRow>
@@ -221,11 +234,11 @@ const TaxInvoice = () => {
                 </Table>
               </TableContainer>
               {/* </Container> */}
-              {/* <Box sx={{ paddingTop: "20px", display: "flex" }}>
+              <Box sx={{ paddingTop: "20px", display: "flex" }}>
                 <Stack spacing={2} sx={{ margin: "auto" }}>
-                  <Pagination count={10} color="secondary" variant="outlined" />
+                  <Pagination count={1} color="secondary" variant="outlined" />
                 </Stack>
-              </Box> */}
+              </Box>
             </CardContent>
           </Card>
           {/* </Grid>

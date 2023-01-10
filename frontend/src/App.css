@@ -2,7 +2,7 @@ body {
   background-color: #f4f4f5;
   margin: 0;
   min-height: 100vh;
-  position: relative;
+  position: relative; 
 }
 @font-face {
   font-family: "NotoSansThai";

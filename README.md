@@ -23,7 +23,8 @@ node_modules/
 
 server.js
 
-backend
+- npm install react-pdf
+  backend
 
 - npm i axios
 - npm i cors

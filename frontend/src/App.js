@@ -19,6 +19,7 @@ function App() {
           <Route exact path="/" element={<TaxInvoice />} />
           <Route exact path="/profile" element={<Profile />} />
           <Route exact path="/conditions" element={<ConditionsTaxInv />} />
+
           {/* <Route exact path="/wacoal-tax-invoice" element={<TaxInvoice />} /> */}
         </Routes>
       </Container>

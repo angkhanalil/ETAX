@@ -23,3 +23,24 @@
 .bt-submit {
   text-align: right;
 }
+
+.btn-search{
+  background-color: #d713499e!important;
+  font-weight: 700!important;
+  border-radius: 2em!important;
+}
+.css-md26zr-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #933155!important;
+  border-width: 2px;
+}
+.css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
+  color: #933155!important;
+  font-family: 'NotoSansThai'!important;
+}
+
+
+table{
+  border-collapse: collapse;
+  border-radius: 1em;
+  overflow: hidden;
+}
