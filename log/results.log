@@ -28,3 +28,4 @@
 {"label":"server.js","level":"error","message":"donsole is not defined","ms":"+3ms","timestamp":"2023-01-12 14:43:47"}
 {"label":"server.js","level":"info","message":{"pono":"PONO"},"ms":"+0ms","timestamp":"2023-01-12 14:44:01"}
 {"label":"server.js","level":"info","message":"getOrder e-tax invoice","ms":"+2h","timestamp":"2023-01-12 16:26:07"}
+ 
