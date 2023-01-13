@@ -25,7 +25,7 @@ const downLoadInvoice = async (req, res) => {
   })
     .then(function (response) {
       //handle success
-      console.log(response);
+      //console.log(response);
       res.status(200).json(response.data);
     })
     .catch(function (response) {
