@@ -6,6 +6,7 @@ import Profile from "./Pages/Profile/Profile";
 import ConditionsTaxInv from "./Pages/ConditionsTaxInv/ConditionsTaxInv";
 import TaxInvoice from "./Pages/TaxInvoice/TaxInvoice";
 import Footer from "./components/Footer/Footer";
+import CookieConsent from "./components/CookieConsent/CookieConsent";
 
 import Container from "@mui/material/Container";
 function App() {
@@ -25,6 +26,7 @@ function App() {
       </Container>
 
       {/* {  {  <Route exact path="/" component={}/>    } */}
+      <CookieConsent />
       <Footer />
     </Router>
   );
