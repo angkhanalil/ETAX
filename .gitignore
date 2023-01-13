@@ -8,7 +8,9 @@ node_modules/
 
 # testing
 /coverage
-
+# log
+log
+log/
 # production
 build
 build/
