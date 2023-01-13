@@ -1,0 +1,30 @@
+2023-01-12 11:12:32 [32minfo[39m: getOrder e-tax invoice
+{"level":"info","message":"getOrder e-tax invoice","ms":"+0ms","timestamp":"2023-01-12 11:13:19"}
+{"label":"server.js","level":"info","message":"getOrder e-tax invoice","ms":"+0ms","timestamp":"2023-01-12 11:14:10"}
+{"label":"server.js","level":"info","message":"getOrder e-tax invoice","ms":"+0ms","timestamp":"2023-01-12 11:16:13"}
+{"label":"server.js","level":"info","message":{"po":"PONO"},"ms":"+0ms","timestamp":"2023-01-12 11:18:37"}
+{"label":"server.js","level":"error","message":"Not User!","ms":"+8ms","timestamp":"2023-01-12 11:18:37"}
+{"label":"server.js","level":"info","message":{"po":"PONO"},"ms":"+0ms","timestamp":"2023-01-12 11:20:46"}
+{"label":"server.js","level":"info","message":"getOrder e-tax invoice","ms":"+0ms","timestamp":"2023-01-12 11:21:38"}
+{"label":"server.js","level":"info","message":{"po":"PONO"},"ms":"+0ms","timestamp":"2023-01-12 11:22:34"}
+{"label":"server.js","level":"info","message":{"pono":"PONO"},"ms":"+0ms","timestamp":"2023-01-12 11:33:07"}
+{"label":"server.js","level":"info","message":"getOrder e-tax invoice","ms":"+0ms","timestamp":"2023-01-12 11:34:10"}
+{"label":"server.js","level":"info","message":"getOrder e-tax invoice","ms":"+0ms","timestamp":"2023-01-12 11:36:45"}
+{"label":"server.js","level":"info","message":{"pono":"PONO"},"ms":"+40s","timestamp":"2023-01-12 11:37:25"}
+{"label":"server.js","level":"info","message":{"pono":"PONO"},"ms":"+53s","timestamp":"2023-01-12 11:38:18"}
+{"label":"server.js","level":"info","message":{"pono":"PONO"},"ms":"+0ms","timestamp":"2023-01-12 11:38:55"}
+{"label":"server.js","level":"error","message":"Invalid status code: function status(code) {\n  if ((typeof code === 'string' || Math.floor(code) !== code) && code > 99 && code < 1000) {\n    deprecate('res.status(' + JSON.stringify(code) + '): use res.status(' + Math.floor(code) + ') instead')\n  }\n  this.statusCode = code;\n  return this;\n}","ms":"+8ms","timestamp":"2023-01-12 11:38:55"}
+{"label":"server.js","level":"info","message":"getOrder e-tax invoice","ms":"+0ms","timestamp":"2023-01-12 11:49:07"}
+{"label":"server.js","level":"info","message":"getOrder e-tax invoice","ms":"+0ms","timestamp":"2023-01-12 12:00:12"}
+{"label":"server.js","level":"info","message":"getOrder e-tax invoice","ms":"+11s","timestamp":"2023-01-12 12:00:23"}
+{"label":"server.js","level":"info","message":"getOrder e-tax invoice","ms":"+0ms","timestamp":"2023-01-12 12:04:45"}
+{"label":"server.js","level":"info","message":"getOrder e-tax invoice","ms":"+10s","timestamp":"2023-01-12 12:04:55"}
+{"label":"server.js","level":"info","message":"getOrder e-tax invoice","ms":"+4s","timestamp":"2023-01-12 12:04:59"}
+{"label":"server.js","level":"info","message":{"pono":"PONO"},"ms":"+0ms","timestamp":"2023-01-12 14:43:10"}
+{"label":"server.js","level":"error","message":"Console.log is not a function","ms":"+8ms","timestamp":"2023-01-12 14:43:10"}
+{"label":"server.js","level":"info","message":{"pono":"PONO"},"ms":"+0ms","timestamp":"2023-01-12 14:43:24"}
+{"label":"server.js","level":"error","message":"donsole is not defined","ms":"+8ms","timestamp":"2023-01-12 14:43:24"}
+{"label":"server.js","level":"info","message":{"pono":"PONO"},"ms":"+23s","timestamp":"2023-01-12 14:43:47"}
+{"label":"server.js","level":"error","message":"donsole is not defined","ms":"+3ms","timestamp":"2023-01-12 14:43:47"}
+{"label":"server.js","level":"info","message":{"pono":"PONO"},"ms":"+0ms","timestamp":"2023-01-12 14:44:01"}
+{"label":"server.js","level":"info","message":"getOrder e-tax invoice","ms":"+2h","timestamp":"2023-01-12 16:26:07"}

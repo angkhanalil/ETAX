@@ -9,7 +9,7 @@ import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import TextField from "@mui/material/TextField";
+import TextField, { textFieldClasses } from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import SearchIcon from "@mui/icons-material/Search";
 import CardActions from "@mui/material/CardActions";
@@ -26,7 +26,13 @@ import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
 import { styled } from "@mui/material/styles";
+
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 import env from "react-dotenv";
+import { color, fontFamily } from "@mui/system";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -39,19 +45,33 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
+const StyleTextField = styled(TextField)(({ theme }) => ({
+  "& label.Mui-focused": {
+    color: "#933155",
+    fontFamily: "NotoSansThai",
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset.MuiOutlinedInput-notchedOutline": {
+      borderColor: "#933155",
+    },
+  },
+}));
+
 const TaxInvoice = () => {
+  Moment.locale("en");
+
   const [data, setData] = useState([]);
   const [ponum, setPonum] = useState("");
+  const [year, setYear] = useState("2023");
   const [invoiceno, setInvoiceno] = useState("");
   const [isShown, setIsShown] = useState(false);
   const [err, setErr] = useState("");
-  Moment.locale("en");
 
   const searchinvoice = (event) => {
     setIsShown(false);
 
     axios
-      .get(`${process.env.REACT_APP_BACKEND_API_BASE_URL}` + "/api/order")
+      .get("/api/order")
       .then((response) => {
         // console.log(response.data);
         // console.log(JSON.stringify(response.data));
@@ -70,7 +90,7 @@ const TaxInvoice = () => {
     console.log(Moment(info.DOCUMENT_ISSUE_DTM).format("yyyyMMDD"));
 
     axios
-      .get(`${process.env.REACT_APP_BACKEND_API_BASE_URL}` + "/api/downlaod")
+      .get("/api/downlaod")
       .then((response) => {
         console.log(response.data);
         // console.log(JSON.stringify(response.data));
@@ -105,8 +125,26 @@ const TaxInvoice = () => {
                 <Grid container spacing={2} direction="row">
                   <form onSubmit={searchinvoice} className="form-invoice">
                     <Grid container spacing={3}>
+                      <Grid item xs={3}>
+                        <FormControl fullWidth>
+                          <InputLabel id="demo-simple-select-label">
+                            Year
+                          </InputLabel>
+                          <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            size="small"
+                            value={year}
+                            label="Year"
+                            onChange={(e) => setYear(e.target.value)}
+                          >
+                            <MenuItem value={2023}>2023</MenuItem>
+                            <MenuItem value={2022}>2022</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </Grid>
                       <Grid item xs={4}>
-                        <TextField
+                        <StyleTextField
                           label="เลขที่คำสั่งซื้อ (Order No.)"
                           variant="outlined"
                           focused
@@ -119,7 +157,7 @@ const TaxInvoice = () => {
                       </Grid>
 
                       <Grid item xs={4}>
-                        <TextField
+                        <StyleTextField
                           label="เลขที่ใบกำกับภาษี/Invoice No."
                           variant="outlined"
                           size="small"
@@ -128,6 +166,7 @@ const TaxInvoice = () => {
                           name="invoiceno"
                           value={invoiceno}
                           onChange={(e) => setInvoiceno(e.target.value)}
+                          className="input-inv"
                         />
                       </Grid>
                     </Grid>

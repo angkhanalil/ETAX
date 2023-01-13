@@ -7,7 +7,7 @@
 }
 
 .f-header div span {
-  font-family: "NotoSansThai" !important;
+  font-family: "NotoSansThai" !important; 
 }
 
 .tax-conditions {
@@ -29,15 +29,18 @@
   font-weight: 700!important;
   border-radius: 2em!important;
 }
-.css-md26zr-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+/* .css-md26zr-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
   border-color: #933155!important;
   border-width: 2px;
 }
-.css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
+.css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui-focused.input-inv {
   color: #933155!important;
   font-family: 'NotoSansThai'!important;
-}
-
+}*/
+.input-inv{
+  color: #933155!important;
+  font-family: 'NotoSansThai'!important;
+} 
 
 table{
   border-collapse: collapse;
