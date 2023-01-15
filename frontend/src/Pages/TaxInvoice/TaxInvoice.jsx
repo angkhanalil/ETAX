@@ -13,7 +13,10 @@ import TextField, { textFieldClasses } from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import SearchIcon from "@mui/icons-material/Search";
 import CardActions from "@mui/material/CardActions";
-// import CustomerInvoice from "../../components/CustomerInvoice/CustomerInvoice";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 import { Link } from "react-router-dom";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -26,13 +29,6 @@ import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
 import { styled } from "@mui/material/styles";
-
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import env from "react-dotenv";
-import { color, fontFamily } from "@mui/system";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -57,6 +53,15 @@ const StyleTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
+const StyleSelect = styled(Select)(({ theme }) => ({
+  // "& .MuiOutlinedInput-root": {
+  "& fieldset.MuiOutlinedInput-notchedOutline ": {
+    borderColor: "#933155",
+    borderWidth: "2px",
+  },
+  // },.Mui-focused
+}));
+
 const TaxInvoice = () => {
   Moment.locale("en");
 
@@ -70,17 +75,28 @@ const TaxInvoice = () => {
   const searchinvoice = (event) => {
     setIsShown(false);
 
-    axios
-      .get("/api/order")
+    axios({
+      method: "put",
+      url: "/api/order",
+      data: {
+        pono: "ddd",
+      },
+      headers: { "Content-Type": "application/json" },
+    })
       .then((response) => {
         // console.log(response.data);
         // console.log(JSON.stringify(response.data));
         setData(response.data);
         setIsShown((current) => !current);
       })
-      .catch((error) => {
+      .catch(function (error) {
+        // handle error
         console.log(error);
+      })
+      .finally(function () {
+        // always executed
       });
+
     event.preventDefault();
   };
 
@@ -127,20 +143,20 @@ const TaxInvoice = () => {
                     <Grid container spacing={3}>
                       <Grid item xs={3}>
                         <FormControl fullWidth>
-                          <InputLabel id="demo-simple-select-label">
-                            Year
-                          </InputLabel>
-                          <Select
-                            labelId="demo-simple-select-label"
+                          <InputLabel id="inv-year">Year</InputLabel>
+                          <StyleSelect
+                            labelId="inv-year"
                             id="demo-simple-select"
+                            name="year"
                             size="small"
                             value={year}
                             label="Year"
+                            fullWidth
                             onChange={(e) => setYear(e.target.value)}
                           >
                             <MenuItem value={2023}>2023</MenuItem>
                             <MenuItem value={2022}>2022</MenuItem>
-                          </Select>
+                          </StyleSelect>
                         </FormControl>
                       </Grid>
                       <Grid item xs={4}>

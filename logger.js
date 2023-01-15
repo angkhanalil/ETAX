@@ -1,9 +1,11 @@
+"use strict";
 const { createLogger, format, transports } = require("winston");
 const fs = require("fs");
 const path = require("path");
 const { timeStamp } = require("console");
 const logDir = "log";
-
+require("dotenv").config();
+require("winston-mongodb").MongoDB;
 //Create the log directory if it does not exist
 if (!fs.existsSync(logDir)) {
   fs.mkdirSync(logDir);
@@ -23,7 +25,20 @@ const logger = createLogger({
     format.json()
     // format.printf((info) => `${info.timestamp} ${info.level}: ${info.message}`)
   ),
-  transports: [new transports.Console(), new transports.File({ filename })],
+  transports: [
+    new transports.Console(),
+    new transports.File({ filename }),
+    new transports.MongoDB({
+      db: process.env.MONGODB_SRV,
+
+      options: {
+        useUnifiedTopology: true,
+      },
+      collection: "meta",
+      capped: true,
+      metaKey: "meta",
+    }),
+  ],
 });
 
 module.exports = logger;

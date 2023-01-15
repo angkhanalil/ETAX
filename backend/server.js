@@ -1,16 +1,23 @@
 require("dotenv").config();
 const express = require("express");
-
+// var MongoClient = require("mongodb");
 const cors = require("cors");
 const path = require("path");
+const bodyParser = require("body-parser");
+
 //const http = require("http");
 const OrderRoutes = require("./routes/OrderRoutes");
 const EtaxRoutes = require("./routes/EtaxDocRoutes");
 const app = express();
 app.use(cors());
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, "../frontend/build")));
 app.get("/", function (req, res) {
