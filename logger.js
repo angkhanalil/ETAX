@@ -2,7 +2,6 @@
 const { createLogger, format, transports } = require("winston");
 const fs = require("fs");
 const path = require("path");
-const { timeStamp } = require("console");
 const logDir = "log";
 require("dotenv").config();
 require("winston-mongodb").MongoDB;
@@ -29,6 +28,7 @@ const logger = createLogger({
     new transports.Console(),
     new transports.File({ filename }),
     new transports.MongoDB({
+      level: "info",
       db: process.env.MONGODB_SRV,
 
       options: {

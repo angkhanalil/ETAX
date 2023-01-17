@@ -1,35 +1,48 @@
+"use strict";
 const Order = require("../models/Order");
 const sqlConfig = require("../config/db");
 const sql = require("mssql");
 const logger = require("../../logger");
-const { orderValidation } = require("../validation/validation");
 const { validationResult } = require("express-validator");
+
 const getOrder = async (req, res) => {
   try {
+    logger.info("getOrder e-tax invoice req : ", { meta: req.body });
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      console.log(errors);
       return res.status(400).json({
         success: false,
         errors: errors.array(),
       });
     } else {
-      console.log(errors);
-      console.log("body ", req.body);
       await sql.connect(sqlConfig);
+      const raw_query = `SELECT BILL_NO,DOCUMENT_NAME,DOCUMENT_ID,DOCUMENT_ISSUE_DTM,BUYER_ORDER_ASSIGN_ID 
+                          FROM ETAX_DOCUMENT_HEADER  where  BUYER_ORDER_ASSIGN_ID = '${req.body.orderno}'  `;
+      //https://www.stackhawk.com/blog/node-js-sql-injection-guide-examples-and-prevention/
+      //let order = 635436098388582'${req.body.orderno}'
+      await sql.query(raw_query, (err, result) => {
+        if (err !== null) {
+          logger.error("getOrder e-tax invoice response : ", {
+            meta: err.message,
+          });
+          //console.log("err ", err);
+          res.status(400).json({ message: err.message });
+        } else {
+          //console.log(result.recordsets[0]);
+          logger.info("getOrder e-tax invoice response : ", {
+            meta: result.recordsets[0],
+          });
+          res.status(200).json(result.recordsets[0]);
+        }
+      });
 
-      let order = await sql.query(
-        "SELECT BILL_NO,DOCUMENT_NAME,DOCUMENT_ID,DOCUMENT_ISSUE_DTM,BUYER_ORDER_ASSIGN_ID FROM ETAX_DOCUMENT_HEADER  where  BUYER_ORDER_ASSIGN_ID = '635436098388582'"
-      );
-      logger.info("getOrder e-tax invoice", { meta: req.body });
-      // logger.debug("Debugging info");
-      //https://www.npmjs.com/package/mssql#query-command-callback
-      res.status(200).json(order.recordsets[0]);
+      //sql.query(raw_query);
+      // res.status(200).json(order.recordsets[0]);
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
     //console.log(error.message);
-    logger.error("getOrder e-tax invoice");
+    logger.error("getOrder e-tax invoice response : ", { meta: error.message });
   }
 };
 

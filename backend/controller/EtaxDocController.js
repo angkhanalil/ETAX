@@ -1,3 +1,4 @@
+"use strict";
 const logger = require("../../logger");
 const FormData = require("form-data");
 // const https = require("https");

@@ -25,7 +25,7 @@ const Navbar = () => {
               textDecoration: "none",
             }}
           >
-            Wacoal Thailand
+            ETAX-THAIWACOAL
           </Typography>
           {/* *************************** */}
           <Typography
