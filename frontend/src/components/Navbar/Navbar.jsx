@@ -25,7 +25,7 @@ const Navbar = () => {
               textDecoration: "none",
             }}
           >
-            ETAX-THAIWACOAL
+            e-TAX THAIWACOAL
           </Typography>
           {/* *************************** */}
           <Typography

@@ -65,6 +65,9 @@ const StyleSelect = styled(Select)(({ theme }) => ({
     borderWidth: "2px",
     fontSize: "18px",
   },
+  "& legend": {
+    fontSize: "0.98em",
+  },
   // },.Mui-focused
 }));
 
@@ -76,8 +79,9 @@ const TaxInvoice = () => {
   const [year, setYear] = useState("2023");
   const [invoiceno, setInvoiceno] = useState("");
   const [isShown, setIsShown] = useState(false);
-  const [err, setErr] = useState("");
+  const [array, setArray] = useState([]);
 
+  // console.log(Moment().year());
   const searchinvoice = (event) => {
     setIsShown(false);
     // if (ponum === "" && invoiceno === "") {
@@ -145,7 +149,7 @@ const TaxInvoice = () => {
             className="f-header"
             title={
               <Typography className="f-header" variant={"h6"}>
-                ค้นหาใบกำกับภาษีอิเล็กทรอนิกส์ (ETAX-INVOICE)
+                ค้นหาใบกำกับภาษีอิเล็กทรอนิกส์ (e-TAX INVOICE)
                 {/* <Typography
                   sx={{ paddingLeft: "10px" }}
                   variant="subtitle2"
@@ -193,7 +197,7 @@ const TaxInvoice = () => {
                     </Grid>
                     <Grid item xs={12} md={2} lg={2}>
                       <FormControl fullWidth>
-                        <InputLabel id="inv-year">Year</InputLabel>
+                        <InputLabel id="inv-year">ปี/Year</InputLabel>
                         <StyleSelect
                           labelId="inv-year"
                           id="demo-simple-select"
@@ -211,7 +215,7 @@ const TaxInvoice = () => {
                     </Grid>
                     <Grid item xs={12} md={4} lg={4}>
                       <StyleTextField
-                        label="เลขที่คำสั่งซื้อ (Order No.)"
+                        label="เลขที่คำสั่งซื้อ/Order No."
                         variant="outlined"
                         focused
                         size="small"
@@ -227,7 +231,7 @@ const TaxInvoice = () => {
                         gutterBottom
                         className="typo-center"
                       >
-                        or
+                        หรือ
                       </Typography>
                     </Grid>
                     <Grid item xs={12} md={4} lg={4}>
@@ -258,7 +262,7 @@ const TaxInvoice = () => {
                         value="Submit"
                         variant="contained"
                       >
-                        Search
+                        ค้นหา/Search
                       </Button>
                     </Grid>
                   </Grid>
@@ -366,8 +370,6 @@ const TaxInvoice = () => {
               </Box>
             </CardContent>
           </Card>
-          {/* </Grid>
-        </Grid> */}
         </Box>
       )}
     </div>

@@ -16,8 +16,18 @@ const getOrder = async (req, res) => {
       });
     } else {
       await sql.connect(sqlConfig);
-      const raw_query = `SELECT BILL_NO,DOCUMENT_NAME,DOCUMENT_ID,DOCUMENT_ISSUE_DTM,BUYER_ORDER_ASSIGN_ID 
-                          FROM ETAX_DOCUMENT_HEADER  where  BUYER_ORDER_ASSIGN_ID = '${req.body.orderno}'  `;
+      let raw_query = `SELECT BILL_NO,DOCUMENT_NAME,DOCUMENT_ID,DOCUMENT_ISSUE_DTM,BUYER_ORDER_ASSIGN_ID 
+                          FROM ETAX_DOCUMENT_HEADER  where  year([DOCUMENT_ISSUE_DTM]) = '${req.body.inv_year}'    
+                          `;
+
+      if (!req.body.orderno == "") {
+        raw_query =
+          raw_query +
+          `  AND   BUYER_ORDER_ASSIGN_ID = '${req.body.orderno}'   `;
+      }
+      if (!req.body.invoice == "") {
+        raw_query = raw_query + ` AND  BILL_NO = '${req.body.invoice}' `;
+      }
       //https://www.stackhawk.com/blog/node-js-sql-injection-guide-examples-and-prevention/
       //let order = 635436098388582'${req.body.orderno}'
       await sql.query(raw_query, (err, result) => {
@@ -49,8 +59,8 @@ const getOrder = async (req, res) => {
 const getOrderforEtax = async (req, res, next) => {
   try {
     logger.info("body", { meta: req.body });
-    console.log(req.socket.remoteAddress);
-    console.log(req.ip);
+    // console.log(req.socket.remoteAddress);
+    // console.log(req.ip);
     res.status(200).json(req.body);
   } catch (error) {
     res.status(500).json({ message: error.message });
