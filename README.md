@@ -40,6 +40,8 @@ frontend
 - npm install @mui/joy
 - npm install moment --save
 
+- https://stackoverflow.com/questions/57093235/generate-sourcemap-false-issue
+
 logging
 
 - npm install winston
