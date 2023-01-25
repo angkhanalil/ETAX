@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./TaxInvoice.css";
-import AlertValidate from "../../components/AlertValidate/AlertValidate";
+// import AlertValidate from "../../components/AlertValidate/AlertValidate";
+// import Year from "../../components/Year/Year";
+import Conditions from "../../components/Condition/Conditions";
 import Moment from "moment";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -10,7 +12,7 @@ import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import TextField, { textFieldClasses } from "@mui/material/TextField";
+import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import SearchIcon from "@mui/icons-material/Search";
 import CardActions from "@mui/material/CardActions";
@@ -30,7 +32,17 @@ import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
 import { styled } from "@mui/material/styles";
-
+import Alert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
+import AlertTitle from "@mui/material/AlertTitle";
+import Dialog, { DialogClasses } from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Checkbox from "@mui/material/Checkbox";
+import { pink } from "@mui/material/colors";
+// const label = { inputProps: { "aria-label": "Checkbox demo" } };
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "#d5446ca6",
@@ -66,7 +78,7 @@ const StyleSelect = styled(Select)(({ theme }) => ({
     fontSize: "18px",
   },
   "& legend": {
-    fontSize: "0.98em",
+    fontSize: "1.15em",
   },
   // },.Mui-focused
 }));
@@ -74,63 +86,101 @@ const StyleSelect = styled(Select)(({ theme }) => ({
 const TaxInvoice = () => {
   Moment.locale("en");
   const [open, setOpen] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [checkedAccept, setcheckedAccept] = useState(false);
   const [data, setData] = useState([]);
   const [ponum, setPonum] = useState("");
-  const [year, setYear] = useState("2023");
+  const [year, setYear] = useState("");
   const [invoiceno, setInvoiceno] = useState("");
+  const [invdate, setinvdate] = useState("");
   const [isShown, setIsShown] = useState(false);
-  const [array, setArray] = useState([]);
+  const [listyear, setlistYear] = useState([]);
+  const [messageInfo, setMessageInfo] = useState("");
+  const [severity, setseverity] = useState("warning");
+  const [downlaod, setDownload] = useState(true);
 
-  // console.log(Moment().year());
+  useEffect(() => {
+    lyear();
+  }, []);
+
+  const lyear = () => {
+    axios
+      .get("/api/order/year")
+      .then((response) => {
+        setlistYear(response.data.year);
+        setYear(response.data.year[0]);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   const searchinvoice = (event) => {
     setIsShown(false);
-    // if (ponum === "" && invoiceno === "") {
-    //   setOpen(true);
-    //   alert("required");
-    // } else {
+    if (ponum === "" && invoiceno === "") {
+      setseverity("error");
+      setMessageInfo("กรุณาระบุเลขที่คำสั่งซื้อหรือเลขที่ใบกำกับภาษีของท่าน");
+      setOpen(true);
+    } else {
+      axios({
+        method: "put",
+        url: "/api/order",
+        data: {
+          inv_year: year,
+          orderno: ponum,
+          invoice: invoiceno,
+        },
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((response) => {
+          if (response.statusText == "OK") {
+            if (response.data.length == 0) {
+              setOpen(true);
+              setIsShown(false);
+              setseverity("warning");
+              setMessageInfo("ไม่พบใบกำกับภาษี");
+            } else {
+              setData(response.data);
+              setOpen(false);
+              setIsShown((current) => !current);
+            }
+          }
+        })
+        .catch(function (error) {
+          // handle error
+          setseverity("error");
+          setOpen(true);
+          setMessageInfo(error.message);
+        })
+        .finally(function () {
+          // always executed
+        });
+    }
+
+    event.preventDefault();
+  };
+  const acceptConditions = (info) => {
+    setInvoiceno(info.DOCUMENT_ID);
+    setinvdate(Moment(info.DOCUMENT_ISSUE_DTM).format("yyyyMMDD"));
+    setOpenDialog(true);
+  };
+  const handleAcceptConditions = (event) => {
+    setcheckedAccept(event.target.checked);
+    setDownload(!downlaod);
+  };
+  const downloadinvoice = (info) => {
     axios({
       method: "put",
-      url: "/api/order",
+      url: "/api/downlaod",
       data: {
-        inv_year: year,
-        orderno: ponum,
         invoice: invoiceno,
+        invoicedate: invdate,
       },
       headers: { "Content-Type": "application/json" },
     })
       .then((response) => {
-        // console.log(response.data);
-        // console.log(JSON.stringify(response.data));
-        setData(response.data);
-        setIsShown((current) => !current);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-        console.log(error.message);
-        console.log(error.response.data.errors);
-        console.log(error.response.data.success);
-      })
-      .finally(function () {
-        // always executed
-      });
-    // }
-
-    event.preventDefault();
-  };
-
-  const downloadinvoice = (info) => {
-    //get
-    console.log(info.DOCUMENT_ID);
-    console.log(Moment(info.DOCUMENT_ISSUE_DTM).format("yyyyMMDD"));
-
-    axios
-      .get("/api/downlaod")
-      .then((response) => {
-        console.log(response.data);
-        // console.log(JSON.stringify(response.data));
-        // console.log(response.data.pdfURL);
         window.open(response.data.pdfURL, "_blank");
+        window.location.reload();
       })
       .catch((error) => {
         console.log(error);
@@ -141,15 +191,82 @@ const TaxInvoice = () => {
 
   return (
     <div>
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        onClose={(e) => setOpen(false)}
+      >
+        <Alert
+          severity={severity}
+          onClose={(e) => setOpen(false)}
+          autoHideDuration={6000}
+        >
+          <AlertTitle>Error</AlertTitle>
+          {messageInfo}
+          {/* — <strong>----</strong> */}
+        </Alert>
+      </Snackbar>
+      <Dialog open={openDialog} aria-labelledby="responsive-dialog-title">
+        <DialogTitle
+          id="responsive-dialog-title"
+          sx={{ fontFamily: "NotoSansThai" }}
+        >
+          Warning!!!
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText sx={{ fontFamily: "NotoSansThai" }}>
+            <Checkbox
+              checked={checkedAccept}
+              //onChange={(e) => setcheckedAccept(!checkedAccept)}
+              onChange={handleAcceptConditions}
+              // defaultChecked
+              sx={{
+                color: pink[800],
+                "&.Mui-checked": {
+                  color: pink[600],
+                },
+                "& .MuiSvgIcon-root": { fontSize: 28 },
+              }}
+            />
+            ข้าพเจ้าได้อ่าน
+            <Link to={"/conditions"}>
+              เงื่อนไขการออกใบกำกับภาษีสำหรับบุคคลธรรมดา
+            </Link>
+            (e-Tax Invoice) เรียบร้อยแล้ว.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            className="btn-search"
+            startIcon={<FileDownloadIcon />}
+            type="submit"
+            value="Submit"
+            variant="contained"
+            autoFocus
+            disabled={downlaod}
+            onClick={() => {
+              downloadinvoice();
+            }}
+          >
+            {/*onClick={handleClose} */}
+            Download
+          </Button>
+        </DialogActions>
+      </Dialog>
       {/* <AlertValidate open={open} /> */}
       {/* {open && <AlertValidate />} */}
+      <Box sx={{ p: 5, pb: 2 }}>
+        <Conditions />
+      </Box>
+
       <Box sx={{ p: 5 }}>
-        <Card sx={{ borderRadius: "15px" }} variant="outlined">
+        <Card sx={{ borderRadius: "15px" }} variant="">
           <CardHeader
             className="f-header"
             title={
               <Typography className="f-header" variant={"h6"}>
-                ค้นหาใบกำกับภาษีอิเล็กทรอนิกส์ (e-TAX INVOICE)
+                ค้นหาใบกำกับภาษีอิเล็กทรอนิกส์ (e-TAX Invoice)
                 {/* <Typography
                   sx={{ paddingLeft: "10px" }}
                   variant="subtitle2"
@@ -166,19 +283,12 @@ const TaxInvoice = () => {
           ></CardHeader>
           {/* <Typography variant="h5">ค้นหาใบกำกับภาษี</Typography> {<Typography variant={"h6"}>ค้นหาใบกำกับภาษี </Typography>}*/}
           <CardContent>
-            <Box direction="row">
-              {/* <Grid container alignItems="flex-end">
-                <Link className="tax-conditions" to={"/conditions"}>
-                  เงื่อนไขการออกใบกำกับภาษีสำหรับบุคคลธรรมดา
-                </Link>
-              </Grid> */}
-            </Box>
-            <Box>
+            <Box sx={{ pt: 5 }}>
               <Container>
                 {/* <Grid container spacing={3} direction="row"> กรุณาระบุเลขที่คำสั่งซื้อหรือเลขที่ใบกำกับภาษีของท่าน*/}
                 <form onSubmit={searchinvoice} className="form-invoice">
                   <Grid container spacing={3} direction="row">
-                    <Grid alignItems="flex-start" item xs={6} md={6} lg={6}>
+                    <Grid alignItems="flex-start" item xs={12} md={6} lg={6}>
                       <Typography
                         sx={{ paddingLeft: "10px", color: "#c50000" }}
                         variant="subtitle2"
@@ -190,10 +300,10 @@ const TaxInvoice = () => {
                         ***
                       </Typography>
                     </Grid>
-                    <Grid alignItems="flex-end" item xs={6} md={6} lg={6}>
-                      <Link className="tax-conditions" to={"/conditions"}>
+                    <Grid alignItems="flex-end" item xs={12} md={6} lg={6}>
+                      {/* <Link className="tax-conditions" to={"/conditions"}>
                         เงื่อนไขการออกใบกำกับภาษีสำหรับบุคคลธรรมดา
-                      </Link>
+                      </Link> */}
                     </Grid>
                     <Grid item xs={12} md={2} lg={2}>
                       <FormControl fullWidth>
@@ -208,8 +318,15 @@ const TaxInvoice = () => {
                           fullWidth
                           onChange={(e) => setYear(e.target.value)}
                         >
-                          <MenuItem value={2023}>2023</MenuItem>
-                          <MenuItem value={2022}>2022</MenuItem>
+                          {listyear.map((y, index) => {
+                            return (
+                              <MenuItem key={index} value={y}>
+                                {y}
+                              </MenuItem>
+                            );
+                          })}
+                          {/* <MenuItem value={2023}>2023</MenuItem>
+                          <MenuItem value={2022}>2022</MenuItem> */}
                         </StyleSelect>
                       </FormControl>
                     </Grid>
@@ -296,7 +413,7 @@ const TaxInvoice = () => {
               className="f-header"
               title={
                 <Typography className="f-header" variant={"h6"}>
-                  ข้อมูลใบกำกับภาษีอิเล็กทรอนิกส์ (ETAX-INVOICE)
+                  ข้อมูลใบกำกับภาษีอิเล็กทรอนิกส์ (e-Tax Invoice)
                 </Typography>
               }
               subheader=" ผู้ประกอบการ บริษัท ไทยวาโก้ จำกัด (มหาชน)
@@ -309,10 +426,10 @@ const TaxInvoice = () => {
                     <TableRow>
                       <StyledTableCell align="center">ลำดับ</StyledTableCell>
                       <StyledTableCell align="center">
-                        วันที่เอกสาร
+                        วันที่ใบกำกับภาษี
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        เลขที่เอกสาร
+                        เลขที่ใบกำกับภาษี
                       </StyledTableCell>
                       {/* <StyledTableCell align="center">
                         ประเภทเอกสาร
@@ -350,7 +467,7 @@ const TaxInvoice = () => {
                             <IconButton
                               aria-label="print"
                               onClick={() => {
-                                downloadinvoice(inv);
+                                acceptConditions(inv);
                               }}
                             >
                               <FileDownloadIcon />

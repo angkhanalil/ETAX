@@ -10,7 +10,8 @@ const Navbar = () => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
+          <img src="asset/logo.png" alt="Kitty Katty!" className="nav-logo" />
+          {/* <Typography
             variant="h6"
             noWrap
             component="a"
@@ -26,7 +27,7 @@ const Navbar = () => {
             }}
           >
             e-TAX THAIWACOAL
-          </Typography>
+          </Typography> */}
           {/* *************************** */}
           <Typography
             variant="h5"

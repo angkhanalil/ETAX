@@ -13,28 +13,38 @@ if (!fs.existsSync(logDir)) {
 const filename = path.join(logDir, "results.log");
 
 const logger = createLogger({
-  level: "debug",
-  format: format.combine(
-    format.label({ label: path.basename(process.mainModule.filename) }),
-    format.errors({ stack: true }),
-    format.timestamp({
-      format: "YYYY-MM-DD HH:mm:ss",
-    }),
-    format.ms(),
-    format.json()
-    // format.printf((info) => `${info.timestamp} ${info.level}: ${info.message}`)
-  ),
+  // level: "debug",
+  // format: format.combine(
+  //   format.label({ label: path.basename(process.mainModule.filename) }),
+  //   format.errors({ stack: true }),
+  //   format.timestamp({
+  //     format: "YYYY-MM-DD HH:mm:ss",
+  //   }),
+  //   format.ms(),
+  //   format.json()
+  //   // format.printf((info) => `${info.timestamp} ${info.level}: ${info.message}`)
+  // ),
   transports: [
-    new transports.Console(),
-    new transports.File({ filename }),
+    //new transports.Console(),
+    // new transports.File({ filename }),
     new transports.MongoDB({
       level: "info",
       db: process.env.MONGODB_SRV,
-
       options: {
         useUnifiedTopology: true,
       },
-      collection: "meta",
+      collection: "logs_info",
+      label: "info",
+      capped: true,
+      metaKey: "meta",
+    }),
+    new transports.MongoDB({
+      level: "error",
+      db: process.env.MONGODB_SRV,
+      options: {
+        useUnifiedTopology: true,
+      },
+      collection: "logs_error",
       capped: true,
       metaKey: "meta",
     }),

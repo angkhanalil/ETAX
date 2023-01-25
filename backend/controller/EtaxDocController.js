@@ -12,9 +12,10 @@ const downLoadInvoice = async (req, res) => {
   form.append("UserCode", process.env.USER_CODE);
   form.append("AccessKey", process.env.ACCESS_KEY);
   form.append("APIKey", process.env.API_KEY);
-  form.append("InvoiceNumber", "1642002666");
-  form.append("InvoiceDate", "20230106");
-
+  form.append("InvoiceNumber", req.body.invoice);
+  form.append("InvoiceDate", req.body.invoicedate);
+  // console.log(req.body);
+  // console.log(req.body.invoicedate);
   axios({
     method: "post",
     url: process.env.ETAX_URL,
@@ -27,11 +28,15 @@ const downLoadInvoice = async (req, res) => {
     .then(function (response) {
       //handle success
       //console.log(response);
+      logger.info("INET Response : Success ");
       res.status(200).json(response.data);
     })
-    .catch(function (response) {
+    .catch(function (error) {
       //handle error
-      console.log(response);
+      logger.error("inet Response : ", {
+        meta: error.message,
+      });
+      console.log(error.message);
     });
 };
 

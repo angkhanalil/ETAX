@@ -1,0 +1,14 @@
+.box-info{
+    opacity: 1;
+    background: rgb(248, 249, 250);
+    color: rgb(52, 71, 103);
+    border-radius: 0.75rem;
+    box-shadow: none;
+    width: 100%;
+    height: auto;
+}
+
+.tax-red{
+    color: #ff6666;
+    font-weight: bolder;
+}

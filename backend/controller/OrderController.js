@@ -5,9 +5,28 @@ const sql = require("mssql");
 const logger = require("../../logger");
 const { validationResult } = require("express-validator");
 
+const getYearInvoice = async (req, res) => {
+  try {
+    let result = [];
+
+    const today = new Date();
+    const year = today.getFullYear();
+    const lyear = year - 1;
+    result.push(year);
+    result.push(lyear);
+    res.status(200).json({ year: result });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+    //console.log(error.message);
+    logger.error("getYearInvoice response : ", {
+      meta: error.message,
+    });
+  }
+};
+
 const getOrder = async (req, res) => {
   try {
-    logger.info("getOrder e-tax invoice req : ", { meta: req.body });
+    //logger.info("getOrder e-tax invoice req : ", { meta: req.body });
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({
@@ -17,7 +36,7 @@ const getOrder = async (req, res) => {
     } else {
       await sql.connect(sqlConfig);
       let raw_query = `SELECT BILL_NO,DOCUMENT_NAME,DOCUMENT_ID,DOCUMENT_ISSUE_DTM,BUYER_ORDER_ASSIGN_ID 
-                          FROM ETAX_DOCUMENT_HEADER  where  year([DOCUMENT_ISSUE_DTM]) = '${req.body.inv_year}'    
+                          FROM ETAX_DOCUMENT_HEADER  where   year([DOCUMENT_ISSUE_DTM]) = '${req.body.inv_year}'    
                           `;
 
       if (!req.body.orderno == "") {
@@ -71,4 +90,5 @@ const getOrderforEtax = async (req, res, next) => {
 module.exports = {
   getOrder,
   getOrderforEtax,
+  getYearInvoice,
 };
