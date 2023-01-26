@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 import { useEffect } from "react";
 import pluginConfig from "./CookieConfig";
 import "vanilla-cookieconsent";

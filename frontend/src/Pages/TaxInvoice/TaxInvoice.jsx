@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./TaxInvoice.css";
-// import AlertValidate from "../../components/AlertValidate/AlertValidate";
-// import Year from "../../components/Year/Year";
 import Conditions from "../../components/Condition/Conditions";
 import Moment from "moment";
 import Box from "@mui/material/Box";
@@ -35,7 +33,7 @@ import { styled } from "@mui/material/styles";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import AlertTitle from "@mui/material/AlertTitle";
-import Dialog, { DialogClasses } from "@mui/material/Dialog";
+import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
@@ -133,8 +131,8 @@ const TaxInvoice = () => {
         headers: { "Content-Type": "application/json" },
       })
         .then((response) => {
-          if (response.statusText == "OK") {
-            if (response.data.length == 0) {
+          if (response.statusText === "OK") {
+            if (response.data.length === 0) {
               setOpen(true);
               setIsShown(false);
               setseverity("warning");

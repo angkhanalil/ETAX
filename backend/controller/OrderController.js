@@ -1,5 +1,5 @@
 "use strict";
-const Order = require("../models/Order");
+
 const sqlConfig = require("../config/db");
 const sql = require("mssql");
 const logger = require("../../logger");

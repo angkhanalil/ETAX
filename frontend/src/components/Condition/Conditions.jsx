@@ -4,9 +4,6 @@ import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
-
-import FileDownloadIcon from "@mui/icons-material/FileDownload";
-import Stack from "@mui/material/Stack";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 const Conditions = () => {
