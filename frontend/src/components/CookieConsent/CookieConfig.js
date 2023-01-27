@@ -36,9 +36,10 @@ const pluginConfig = {
       consent_modal: {
         title: "We use cookies!",
         description: ` เราให้ความสำคัญต่อข้อมูลส่วนบุคคลของท่าน หากท่านใช้บริการเว็บไซต์นี้โดยไม่มีการปรับตั้งค่าใดๆ แสดงว่าท่านยินยอมที่จะรับคุกกี้บนเว็บไซต์ของเรา 
-        <a type="button" href="https://corporate.wacoal.co.th/privacy/policy_th.pdf" target="blank" > นโยบาย </a> <br/>
-          <a type="button" data-cc="c-settings" class="cc-link" > อ่านเพิ่มเติม </a> 
+        <a type="button" href="https://corporate.wacoal.co.th/privacy/policy_th.pdf" target="blank" > อ่านเพิ่มเติม </a> <br/>
+        
           `,
+        //  <a type="button" data-cc="c-settings" class="cc-link" > อ่านเพิ่มเติม </a>
         primary_btn: {
           text: "Accept all",
           role: "accept_all", // 'accept_selected' or 'accept_all'

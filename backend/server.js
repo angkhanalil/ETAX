@@ -5,7 +5,6 @@ const cors = require("cors");
 const path = require("path");
 const bodyParser = require("body-parser");
 
-//const http = require("http");
 const OrderRoutes = require("./routes/OrderRoutes");
 const EtaxRoutes = require("./routes/EtaxDocRoutes");
 
@@ -13,20 +12,19 @@ const app = express();
 
 app.use(cors());
 
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
-// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
-app.use(express.static(path.join(__dirname, "../frontend/build")));
-app.get("/", function (req, res) {
-  res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
-});
-
 app.use("/api/order", OrderRoutes);
 app.use("/api/downlaod", EtaxRoutes);
+
+// app.use(express.static(path.join(__dirname, "../frontend/build")));
+//build
+// app.use(express.static(path.resolve(__dirname, "../frontend/build")));
+// app.get("/*", function (req, res) {
+//   res.sendFile(path.resolve(__dirname, "../frontend/build", "index.html"));
+// });
 
 // 404 Error
 app.use((req, res, next) => {

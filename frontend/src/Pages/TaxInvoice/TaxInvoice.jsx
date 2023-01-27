@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "./TaxInvoice.css";
 import Conditions from "../../components/Condition/Conditions";
@@ -18,7 +19,6 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { Link } from "react-router-dom";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
@@ -69,15 +69,20 @@ const StyleTextField = styled(TextField)(({ theme }) => ({
 }));
 
 const StyleSelect = styled(Select)(({ theme }) => ({
-  // "& .MuiOutlinedInput-root": {
-  "& fieldset.MuiOutlinedInput-notchedOutline ": {
-    borderColor: "#933155",
-    borderWidth: "2px",
+  "& label.Mui-focused": {
+    color: "#933155",
+    fontFamily: "NotoSansThai",
     fontSize: "18px",
   },
-  "& legend": {
-    fontSize: "1.15em",
+  "& fieldset.MuiOutlinedInput-notchedOutline ": {
+    borderColor: "#933155!important",
+    borderWidth: "2px!important",
   },
+
+  "& legend": {
+    fontSize: "1.4em",
+  },
+
   // },.Mui-focused
 }));
 
@@ -96,7 +101,6 @@ const TaxInvoice = () => {
   const [messageInfo, setMessageInfo] = useState("");
   const [severity, setseverity] = useState("warning");
   const [downlaod, setDownload] = useState(true);
-
   useEffect(() => {
     lyear();
   }, []);
@@ -162,6 +166,9 @@ const TaxInvoice = () => {
     setinvdate(Moment(info.DOCUMENT_ISSUE_DTM).format("yyyyMMDD"));
     setOpenDialog(true);
   };
+  const handleClose = () => {
+    setOpenDialog(false);
+  };
   const handleAcceptConditions = (event) => {
     setcheckedAccept(event.target.checked);
     setDownload(!downlaod);
@@ -205,12 +212,16 @@ const TaxInvoice = () => {
           {/* — <strong>----</strong> */}
         </Alert>
       </Snackbar>
-      <Dialog open={openDialog} aria-labelledby="responsive-dialog-title">
+      <Dialog
+        open={openDialog}
+        onClose={handleClose}
+        aria-labelledby="responsive-dialog-title"
+      >
         <DialogTitle
           id="responsive-dialog-title"
           sx={{ fontFamily: "NotoSansThai" }}
         >
-          Warning!!!
+          เงื่อนไข ข้อตกลง/Conditions
         </DialogTitle>
         <DialogContent>
           <DialogContentText sx={{ fontFamily: "NotoSansThai" }}>
@@ -228,9 +239,9 @@ const TaxInvoice = () => {
               }}
             />
             ข้าพเจ้าได้อ่าน
-            <Link to={"/conditions"}>
+            <Link to={"./conditions"} target="_blank">
               เงื่อนไขการออกใบกำกับภาษีสำหรับบุคคลธรรมดา
-            </Link>
+            </Link>{" "}
             (e-Tax Invoice) เรียบร้อยแล้ว.
           </DialogContentText>
         </DialogContent>
@@ -264,7 +275,7 @@ const TaxInvoice = () => {
             className="f-header"
             title={
               <Typography className="f-header" variant={"h6"}>
-                ค้นหาใบกำกับภาษีอิเล็กทรอนิกส์ (e-TAX Invoice)
+                ค้นหาใบกำกับภาษีอิเล็กทรอนิกส์ (e-Tax Invoice)
                 {/* <Typography
                   sx={{ paddingLeft: "10px" }}
                   variant="subtitle2"
@@ -307,8 +318,8 @@ const TaxInvoice = () => {
                       <FormControl fullWidth>
                         <InputLabel id="inv-year">ปี/Year</InputLabel>
                         <StyleSelect
+                          className="inv-year"
                           labelId="inv-year"
-                          id="demo-simple-select"
                           name="year"
                           size="small"
                           value={year}

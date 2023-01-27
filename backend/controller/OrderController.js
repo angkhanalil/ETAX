@@ -36,7 +36,7 @@ const getOrder = async (req, res) => {
     } else {
       await sql.connect(sqlConfig);
       let raw_query = `SELECT BILL_NO,DOCUMENT_NAME,DOCUMENT_ID,DOCUMENT_ISSUE_DTM,BUYER_ORDER_ASSIGN_ID 
-                          FROM ETAX_DOCUMENT_HEADER  where   year([DOCUMENT_ISSUE_DTM]) = '${req.body.inv_year}'    
+                          FROM ETAX_DOCUMENT_HEADER  where DOCUMENT_TYPE_CODE = 'T03' and year([DOCUMENT_ISSUE_DTM]) = '${req.body.inv_year}'    
                           `;
 
       if (!req.body.orderno == "") {
